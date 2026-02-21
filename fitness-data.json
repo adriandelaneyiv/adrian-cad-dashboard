@@ -1,0 +1,16 @@
+{
+  "lastUpdated": "2026-02-20T21:30:00-06:00",
+  "headline": "Fitness + Accountability",
+  "week": {
+    "gym": "4/7",
+    "journal": "5/7",
+    "content": "4/7",
+    "outreach": "3/7"
+  },
+  "targets": [
+    {"name":"Consistency", "progress": 62},
+    {"name":"Energy", "progress": 70},
+    {"name":"Confidence", "progress": 66}
+  ],
+  "notes": ["Body first, then mind", "Identity-backed habits", "Track and adjust weekly"]
+}

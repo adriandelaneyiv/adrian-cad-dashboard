@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Adrian + CAD Hub</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .layout{display:grid;grid-template-columns:260px 1fr;gap:14px}
+    .side{position:sticky;top:14px;height:calc(100vh - 40px)}
+    .menu{display:flex;flex-direction:column;gap:8px}
+    .menu button{all:unset;cursor:pointer;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:#0f1420;color:#dce3f5;font-size:13px}
+    .menu button.active,.menu button:hover{border-color:#41527a;box-shadow:var(--glow)}
+    .panel{display:none}.panel.active{display:block}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .input, textarea, select{width:100%;background:#0d1320;color:#eaf0ff;border:1px solid #2b3550;border-radius:10px;padding:10px}
+    .btn2{border:1px solid #3a4660;background:#10192a;color:#eaf0ff;padding:9px 12px;border-radius:10px;cursor:pointer}
+    .tableWrap{overflow:auto;max-height:340px;border:1px solid var(--border);border-radius:10px}
+    table{width:100%;border-collapse:collapse}.th,th,td{padding:8px;border-bottom:1px solid #1d2538;font-size:12px;text-align:left}
+    .muted{color:#93a0bd;font-size:12px}
+    .tag{display:inline-block;padding:3px 8px;border:1px solid #3a4660;border-radius:999px;font-size:11px;color:#ffd394}
+    .quote{font-size:24px;line-height:1.2;font-weight:700;letter-spacing:.01em}
+    @media (max-width:980px){.layout{grid-template-columns:1fr}.side{position:static;height:auto}.kpis{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">Adrian + CAD Command Hub</div>
+    <div class="time" id="clock">--:--:--</div>
+  </div>
+
+  <div class="layout">
+    <aside class="card side">
+      <div class="title">Navigation</div>
+      <div class="menu" id="menu">
+        <button class="active" data-panel="overview">Adrian Hub</button>
+        <button data-panel="cad">CAD Hub</button>
+        <button data-panel="analyzer">Top Video Analyzer</button>
+        <button data-panel="offer">Offer Lab</button>
+        <button data-panel="intel">Content Intel</button>
+        <button data-panel="events">Events Planner</button>
+        <button data-panel="uploads">Upload Center</button>
+        <button data-panel="tasks">Execution Board</button>
+      </div>
+      <div style="margin-top:14px" class="muted">Live links</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+        <a class="btn" href="/content.html">Content Ops</a>
+        <a class="btn" href="/projects.html">Projects</a>
+        <a class="btn" href="/fitness.html">Fitness</a>
+      </div>
+      <div style="margin-top:14px" class="muted">Chat with me</div>
+      <a class="btn" style="display:inline-block;margin-top:8px" href="https://t.me/adriandelaneyiv" target="_blank">Open Telegram</a>
+    </aside>
+
+    <main>
+      <section id="overview" class="panel active">
+        <div class="kpis">
+          <div class="card"><div class="title">Year Target</div><div class="kpi" id="yearTarget">100,000</div></div>
+          <div class="card"><div class="title">Total Followers</div><div class="kpi" id="totalFollowers">18,960</div></div>
+          <div class="card"><div class="title">Progress</div><div class="kpi" id="progress">18.9%</div></div>
+          <div class="card"><div class="title">Updated</div><div class="kpi" id="updated">manual</div></div>
+        </div>
+        <div class="two" style="margin-top:12px">
+          <div class="card">
+            <div class="title">Current Doctrine</div>
+            <div class="quote" id="quote">Build the body. Build the mind. Build the life worth inheriting.</div>
+            <div style="margin-top:10px"><span class="tag">Discipline</span> <span class="tag">Obsession</span> <span class="tag">Legacy</span></div>
+          </div>
+          <div class="card">
+            <div class="title">Platform Split</div>
+            <div class="muted">Instagram: <b id="ig">12,400</b></div>
+            <div class="track"><div class="fill" id="igBar" style="width:65%"></div></div>
+            <div class="muted" style="margin-top:8px">TikTok: <b id="tt">6,000</b></div>
+            <div class="track"><div class="fill" id="ttBar" style="width:31%"></div></div>
+            <div class="muted" style="margin-top:8px">YouTube: <b id="yt">560</b></div>
+            <div class="track"><div class="fill" id="ytBar" style="width:3%"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cad" class="panel">
+        <div class="card">
+          <div class="title">CAD Hub — What I’m Building</div>
+          <div class="muted" id="cadFocus">Loading...</div>
+          <ul id="cadNext"></ul>
+        </div>
+        <div class="card" style="margin-top:12px">
+          <div class="title">Activity Feed</div>
+          <div id="cadFeed" class="feed"></div>
+        </div>
+      </section>
+
+      <section id="analyzer" class="panel">
+        <div class="card">
+          <div class="title">Top Video Analyzer (Instagram/TikTok exports)</div>
+          <div class="muted">Upload CSV with columns like: title, views, likes, comments, shares, saves, watch_time.</div>
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <input id="csvFile" class="input" type="file" accept=".csv" style="max-width:360px">
+            <button class="btn2" id="analyzeBtn">Analyze + Stack Rank</button>
+          </div>
+          <div class="tableWrap" style="margin-top:12px">
+            <table id="rankTable">
+              <thead><tr><th>#</th><th>Title</th><th>Views</th><th>Engagement</th><th>Score</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="offer" class="panel">
+        <div class="card">
+          <div class="title">Offer Lab</div>
+          <div class="muted">Draft and refine offer positioning/CTA directly here.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+            <input id="offerName" class="input" placeholder="Offer name">
+            <input id="offerPrice" class="input" placeholder="Price (e.g. $2,500)">
+          </div>
+          <textarea id="offerPromise" rows="3" placeholder="Core promise"></textarea>
+          <textarea id="offerCTA" rows="2" placeholder="Primary CTA line" style="margin-top:8px"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn2" id="saveOffer">Save Offer Draft</button>
+            <button class="btn2" id="clearOffer">Clear</button>
+          </div>
+          <div class="muted" id="offerSavedAt" style="margin-top:8px"></div>
+        </div>
+      </section>
+
+      <section id="intel" class="panel">
+        <div class="card">
+          <div class="title">Content Intel — Competitors + Trend Notes</div>
+          <div class="muted">Track creators you study and what to ethically steal (hooks, formatting, CTA style).</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 120px;gap:8px;margin-top:10px">
+            <input id="intelCreator" class="input" placeholder="Creator @handle">
+            <input id="intelPlatform" class="input" placeholder="Platform">
+            <input id="intelInsight" class="input" placeholder="Why it worked">
+            <button class="btn2" id="intelAdd">Add</button>
+          </div>
+          <div class="tableWrap" style="margin-top:12px">
+            <table>
+              <thead><tr><th>Creator</th><th>Platform</th><th>Insight</th><th>Action</th></tr></thead>
+              <tbody id="intelRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="events" class="panel">
+        <div class="card">
+          <div class="title">Events Planner</div>
+          <div class="muted">Add upcoming events directly in the dashboard (no Telegram needed).</div>
+          <div style="display:grid;grid-template-columns:1.4fr .8fr .8fr .7fr;gap:8px;margin-top:10px">
+            <input id="evName" class="input" placeholder="Event name">
+            <input id="evDate" class="input" type="date">
+            <input id="evLocation" class="input" placeholder="Location">
+            <button class="btn2" id="evAdd">Add</button>
+          </div>
+          <div class="tableWrap" style="margin-top:12px">
+            <table>
+              <thead><tr><th>Event</th><th>Date</th><th>Location</th><th>Action</th></tr></thead>
+              <tbody id="evRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="uploads" class="panel">
+        <div class="card">
+          <div class="title">Upload Center</div>
+          <div class="muted">Drop notes/files metadata for tonight’s build. Files stay local on your machine.</div>
+          <textarea id="uploadNotes" rows="5" placeholder="Paste notes, links, creator insights, etc..."></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn2" id="saveNotes">Save Notes</button>
+            <button class="btn2" id="clearNotes">Clear</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="tasks" class="panel">
+        <div class="card">
+          <div class="title">Execution Board</div>
+          <div style="display:flex;gap:8px;margin-bottom:10px">
+            <input id="taskInput" class="input" placeholder="Add task...">
+            <button class="btn2" id="addTask">Add</button>
+          </div>
+          <ul id="taskList"></ul>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+  // clock
+  setInterval(()=>clock.textContent=new Date().toLocaleTimeString(),1000);clock.textContent=new Date().toLocaleTimeString();
+
+  // panel nav
+  document.querySelectorAll('#menu button').forEach(btn=>btn.onclick=()=>{
+    document.querySelectorAll('#menu button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));document.getElementById(btn.dataset.panel).classList.add('active');
+  });
+
+  const fmt=n=>Number(n||0).toLocaleString();
+
+  async function loadSocial(){
+    const d=await (await fetch('/social-data.json?'+Date.now())).json();
+    const t=d.totals||{}; const total=t.total||0; const target=t.yearTarget||100000;
+    yearTarget.textContent=fmt(target); totalFollowers.textContent=fmt(total);
+    progress.textContent=((total/target)*100).toFixed(1)+'%'; updated.textContent=(d.lastUpdated||'manual').replace('T',' ').slice(0,16);
+    ig.textContent=fmt(t.instagram); tt.textContent=fmt(t.tiktok); yt.textContent=fmt(t.youtube);
+    const p=(n)=>Math.max(1,Math.round((n/target)*100)); igBar.style.width=p(t.instagram)+'%'; ttBar.style.width=p(t.tiktok)+'%'; ytBar.style.width=p(t.youtube)+'%';
+  }
+
+  async function loadCad(){
+    const d=await (await fetch('/cad-data.json?'+Date.now())).json();
+    cadFocus.textContent=(d.focus||'')+' — '+(d.nowDoing||'');
+    cadNext.innerHTML=(d.nextUp||[]).map(x=>`<li>${x}</li>`).join('');
+    cadFeed.innerHTML=(d.activityFeed||[]).map(e=>`<div class='evt'><div class='dot'></div><div><div>${e.event}</div><div class='sub'>${e.time}</div></div></div>`).join('');
+  }
+
+  // analyzer
+  function parseCSV(text){
+    const rows=text.split(/\r?\n/).filter(Boolean); if(!rows.length) return [];
+    const headers=rows[0].split(',').map(h=>h.trim().toLowerCase());
+    return rows.slice(1).map(r=>{
+      const cols=r.split(','); const o={}; headers.forEach((h,i)=>o[h]=(cols[i]||'').trim()); return o;
+    });
+  }
+  function num(v){ return Number(String(v||'0').replace(/[^0-9.]/g,''))||0; }
+  analyzeBtn.onclick=async()=>{
+    const f=csvFile.files[0]; if(!f) return alert('Upload a CSV first.');
+    const text=await f.text(); const rows=parseCSV(text);
+    const scored=rows.map(r=>{
+      const views=num(r.views||r.view||r.plays); const likes=num(r.likes); const comments=num(r.comments); const shares=num(r.shares); const saves=num(r.saves);
+      const engagement=likes+comments*2+shares*3+saves*2;
+      const score=(views*0.45)+(engagement*0.55);
+      return {title:r.title||r.caption||'untitled',views,engagement,score:Math.round(score)};
+    }).sort((a,b)=>b.score-a.score).slice(0,20);
+    const tb=document.querySelector('#rankTable tbody');
+    tb.innerHTML=scored.map((r,i)=>`<tr><td>${i+1}</td><td>${r.title}</td><td>${fmt(r.views)}</td><td>${fmt(r.engagement)}</td><td>${fmt(r.score)}</td></tr>`).join('');
+  };
+
+  // offer lab
+  const offerDraft = JSON.parse(localStorage.getItem('cad_offer_draft')||'{}');
+  offerName.value = offerDraft.name||'';
+  offerPrice.value = offerDraft.price||'';
+  offerPromise.value = offerDraft.promise||'';
+  offerCTA.value = offerDraft.cta||'';
+  if(offerDraft.savedAt) offerSavedAt.textContent = 'Saved: ' + offerDraft.savedAt;
+  saveOffer.onclick=()=>{
+    const payload={
+      name:offerName.value.trim(),
+      price:offerPrice.value.trim(),
+      promise:offerPromise.value.trim(),
+      cta:offerCTA.value.trim(),
+      savedAt:new Date().toLocaleString()
+    };
+    localStorage.setItem('cad_offer_draft', JSON.stringify(payload));
+    offerSavedAt.textContent='Saved: '+payload.savedAt;
+  };
+  clearOffer.onclick=()=>{
+    offerName.value=''; offerPrice.value=''; offerPromise.value=''; offerCTA.value='';
+    localStorage.removeItem('cad_offer_draft');
+    offerSavedAt.textContent='';
+  };
+
+  // content intel
+  let intel=JSON.parse(localStorage.getItem('cad_intel')||'[]');
+  function renderIntel(){
+    intelRows.innerHTML=intel.map((r,i)=>`<tr><td>${r.creator}</td><td>${r.platform}</td><td>${r.insight}</td><td><button class='btn2' onclick='delIntel(${i})'>Del</button></td></tr>`).join('');
+  }
+  window.delIntel=(i)=>{intel.splice(i,1);localStorage.setItem('cad_intel',JSON.stringify(intel));renderIntel();};
+  intelAdd.onclick=()=>{
+    const creator=intelCreator.value.trim(), platform=intelPlatform.value.trim(), insight=intelInsight.value.trim();
+    if(!creator||!insight) return;
+    intel.push({creator,platform,insight});
+    localStorage.setItem('cad_intel',JSON.stringify(intel));
+    intelCreator.value=''; intelPlatform.value=''; intelInsight.value='';
+    renderIntel();
+  };
+  renderIntel();
+
+  // events planner
+  let events=JSON.parse(localStorage.getItem('cad_events')||'[]');
+  function renderEvents(){
+    evRows.innerHTML=events.sort((a,b)=>(a.date||'').localeCompare(b.date||'')).map((e,i)=>`<tr><td>${e.name}</td><td>${e.date||''}</td><td>${e.location||''}</td><td><button class='btn2' onclick='delEvent(${i})'>Del</button></td></tr>`).join('');
+  }
+  window.delEvent=(i)=>{events.splice(i,1);localStorage.setItem('cad_events',JSON.stringify(events));renderEvents();};
+  evAdd.onclick=()=>{
+    const name=evName.value.trim(), date=evDate.value, location=evLocation.value.trim();
+    if(!name) return;
+    events.push({name,date,location});
+    localStorage.setItem('cad_events',JSON.stringify(events));
+    evName.value=''; evDate.value=''; evLocation.value='';
+    renderEvents();
+  };
+  renderEvents();
+
+  // notes
+  uploadNotes.value=localStorage.getItem('cad_upload_notes')||'';
+  saveNotes.onclick=()=>{localStorage.setItem('cad_upload_notes',uploadNotes.value); alert('Saved locally.');};
+  clearNotes.onclick=()=>{uploadNotes.value='';localStorage.removeItem('cad_upload_notes');};
+
+  // tasks
+  let tasks=JSON.parse(localStorage.getItem('cad_tasks')||'[]');
+  function renderTasks(){ taskList.innerHTML=tasks.map((t,i)=>`<li><label><input type='checkbox' ${t.done?'checked':''} onchange='toggleTask(${i})'> ${t.text}</label> <button class='btn2' onclick='delTask(${i})'>Del</button></li>`).join(''); }
+  window.toggleTask=(i)=>{tasks[i].done=!tasks[i].done;localStorage.setItem('cad_tasks',JSON.stringify(tasks));renderTasks();}
+  window.delTask=(i)=>{tasks.splice(i,1);localStorage.setItem('cad_tasks',JSON.stringify(tasks));renderTasks();}
+  addTask.onclick=()=>{const t=taskInput.value.trim(); if(!t) return; tasks.push({text:t,done:false}); taskInput.value=''; localStorage.setItem('cad_tasks',JSON.stringify(tasks)); renderTasks();};
+  renderTasks();
+
+  const quotes=[
+    'Build the body. Build the mind. Build the life worth inheriting.',
+    'No risk. No Porsche. No excuses.',
+    'Obsession beats talent when talent stays comfortable.',
+    'Quiet execution. Loud results.'
+  ]; let qi=0; setInterval(()=>{qi=(qi+1)%quotes.length; quote.textContent=quotes[qi];},7000);
+
+  loadSocial(); loadCad(); setInterval(loadSocial,20000); setInterval(loadCad,10000);
+</script>
+</body>
+</html>

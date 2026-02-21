@@ -1,0 +1,17 @@
+{
+  "lastUpdated": "2026-02-20T21:30:00-06:00",
+  "headline": "Content Ops Engine",
+  "kpis": {
+    "postsThisWeek": 9,
+    "ideasBacklog": 42,
+    "avgViews": 4300,
+    "hitRate": "22%"
+  },
+  "pipeline": [
+    {"title":"Morning routine audit","stage":"live","platform":"TT/IG"},
+    {"title":"Why most guys stay stuck","stage":"editing","platform":"TT/YT"},
+    {"title":"Confidence reps in public","stage":"filming","platform":"TT"},
+    {"title":"Austin event recap","stage":"idea","platform":"IG/YT"}
+  ],
+  "next": ["Finalize 3 content pillars", "Ship 5 posts/day short-form", "Weekly long-form YouTube script"]
+}
