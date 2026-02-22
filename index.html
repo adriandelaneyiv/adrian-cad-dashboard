@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Adrian + CAD Hub</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="styles.css">
   <style>
     .layout{display:grid;grid-template-columns:260px 1fr;gap:14px}
     .side{position:sticky;top:14px;height:calc(100vh - 40px)}
@@ -46,9 +46,9 @@
       </div>
       <div style="margin-top:14px" class="muted">Live links</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-        <a class="btn" href="/content.html">Content Ops</a>
-        <a class="btn" href="/projects.html">Projects</a>
-        <a class="btn" href="/fitness.html">Fitness</a>
+        <a class="btn" href="content.html">Content Ops</a>
+        <a class="btn" href="projects.html">Projects</a>
+        <a class="btn" href="fitness.html">Fitness</a>
       </div>
       <div style="margin-top:14px" class="muted">Chat with me</div>
       <a class="btn" style="display:inline-block;margin-top:8px" href="https://t.me/adriandelaneyiv" target="_blank">Open Telegram</a>
@@ -204,7 +204,7 @@
   const fmt=n=>Number(n||0).toLocaleString();
 
   async function loadSocial(){
-    const d=await (await fetch('/social-data.json?'+Date.now())).json();
+    const d=await (await fetch('social-data.json?'+Date.now())).json();
     const t=d.totals||{}; const total=t.total||0; const target=t.yearTarget||100000;
     yearTarget.textContent=fmt(target); totalFollowers.textContent=fmt(total);
     progress.textContent=((total/target)*100).toFixed(1)+'%'; updated.textContent=(d.lastUpdated||'manual').replace('T',' ').slice(0,16);
@@ -213,7 +213,7 @@
   }
 
   async function loadCad(){
-    const d=await (await fetch('/cad-data.json?'+Date.now())).json();
+    const d=await (await fetch('cad-data.json?'+Date.now())).json();
     cadFocus.textContent=(d.focus||'')+' — '+(d.nowDoing||'');
     cadNext.innerHTML=(d.nextUp||[]).map(x=>`<li>${x}</li>`).join('');
     cadFeed.innerHTML=(d.activityFeed||[]).map(e=>`<div class='evt'><div class='dot'></div><div><div>${e.event}</div><div class='sub'>${e.time}</div></div></div>`).join('');
